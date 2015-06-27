@@ -4,14 +4,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-out
-autom4te.cache
-.deps
-
-compile
-configure
-depcomp
-install-sh
-missing
-aclocal.m4
-Makefile.in
+psp2dir = @psp2dir@
+psp2_LIBRARIES = libsysbase.a
+libsysbase_a_SOURCES = abort.c

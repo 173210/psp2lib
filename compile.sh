@@ -8,3 +8,11 @@
 echo Compiling gcc
 make -C out/gcc all-target-libgcc all-target-libstdc++-v3 "$@"
 echo Done compiling gcc
+
+echo Compiling PSP2 libraries
+make -C out/lib "$@"
+echo Done compiling libraries
+
+echo Compiling PSP2 libraries enabling FPU
+make -C out/lib/fpu "$@"
+echo Done compiling libraries enabling FPU

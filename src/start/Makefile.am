@@ -4,14 +4,16 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-out
-autom4te.cache
-.deps
+all: crt0.o
 
-compile
-configure
-depcomp
-install-sh
-missing
-aclocal.m4
-Makefile.in
+.c.o:
+	$(CC) $(CCASFLAGS) -flto $< -c -o $@
+
+install-exec-hook: crt0.o
+	$(mkinstalldirs) @psp2dir@
+	$(INSTALL_DATA) crt0.o @psp2dir@/crt0.o
+
+uninstall-hook:
+	rm -f @psp2dir@/crt0.o
+
+CLEANFILES = crt0.o

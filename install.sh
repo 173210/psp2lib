@@ -20,4 +20,7 @@ cd ..
 cd thumb
 install libgcc/libgcc.a "$PSP2LIB/thumb/libgcc.a"
 install libstdc++-v3/libsupc++/.libs/libsupc++.a "$PSP2LIB/thumb/libsupc++.a"
-cd ../../../..
+cd ../../..
+
+make -C lib install
+make -C lib/fpu install
