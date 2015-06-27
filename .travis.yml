@@ -12,6 +12,14 @@ before_install:
  - sudo apt-get update -qq -y
  - sudo apt-get install -qq -y gcc-arm-none-eabi libgmp-dev libmpfr-dev libmpc-dev
 
+ - git clone https://github.com/173210/psp2sdk.git -q --single-branch
+
+ - cd psp2sdk/src
+ - ./autogen.sh -q
+ - sudo make install
+ - sudo cp ./start/psp2.specs /usr/lib/gcc/arm-none-eabi/4.9.3
+ - cd ../..
+
 script:
  - export REV=dirty-$(git describe --always)
 
