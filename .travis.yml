@@ -1,0 +1,29 @@
+---
+# Copyright (C) 2015 PSP2SDK Project
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+sudo: required
+
+before_install:
+ - sudo add-apt-repository -y ppa:terry.guo/gcc-arm-embedded
+ - sudo apt-get update -qq -y
+ - sudo apt-get install -qq -y gcc-arm-none-eabi
+
+script:
+ - export REV=dirty-$(git describe --always)
+
+ - ./autogen.sh -q --with-include=/usr/arm-none-eabi/include --prefix=$PWD/dist
+ - ./compile.sh
+ - ./install.sh
+ - (cd dist; zip -0rq ../psp2lib-$REV.zip *)
+ - rm -Rf out dist
+
+after_success:
+ - curl -q -T psp2lib-$REV.zip -u $FTP ftp://wololo.net/
+
+env:
+ global:
+  - secure: "zsF+yvMJZ8E0sopOwDEqsJdoSvKKkgzBqQDGz6Vllbs9doyYXkRUkSHxcpZwDOb5iVDKLhuh/yDwj+sidJYICRx6iRxqz+0MxdLqeLT8JyhPaN0q8KS6kTqgjYGvjnDcIp0YNGn3m4S5Oh0soNiSlhbJg3v2O6NmgKiAtU43qig8gDNgVYJrRiul3jtOx1vzE6cYLXNqF3e0Z+t6+YnIPprpRishg2wz1F4dioJrZxXYd2rcBxXjtlT2Zpb4Pn1Mv89L5/wfeWJujEquglp3K6yQ1MUrk2a/wQUXTS9swI2Zt+WqDFz+agJVcyztHCR+5HZebuQc0iRmURLWbPiah4YgiBkMRu9fk3d8ErihFDyTBVD9zg0sfAwPKeUGfEllBZGmBFzndNOYUGUjE3bg7VNkLJ9ay4SB+traZnGWkvLr/Yn918hRwMaELTK2CzXo5h8hYtYOqycUZ698Hv99x06NDrSLBNLCpf/c1rd7y91aLRh9rji+JX1z1Va/SCQYkPIeyg//LQ0SWmEzaCFZS9rGZwA6U373QLF9D/DP/vOHNbPOEN3KMP9CDG/huM8avo0gmR1bVAEUHz0d8zq1Cf3GOVt8ks1HR2CEMoXyshGXhEnd4S6s7kK/iKBjyA3+PP/Eix8p/nZ8TUlVTkojW2uAW6Qmz43f61NoZzwztAU="
