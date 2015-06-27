@@ -25,7 +25,7 @@ before_install:
 script:
  - export REV=dirty-$(git describe --always)
 
- - ./autogen.sh -q --prefix=$PWD/dist
+ - ./autogen.sh -q --prefix=$PWD/dist || cat config.log
  - ./compile.sh
  - ./install.sh $PWD/dist
  - (cd dist; zip -0rq ../psp2lib-$REV.zip *)
