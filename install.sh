@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 # Copyright (C) 2015 PSP2SDK Project
 #
 # This Source Code Form is subject to the terms of the Mozilla Public
