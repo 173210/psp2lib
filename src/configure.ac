@@ -12,7 +12,6 @@ AC_CONFIG_SRCDIR(start/crt0.c)
 AM_INIT_AUTOMAKE(foreign -Wno-portability)
 
 AC_ARG_WITH(fpu, AS_HELP_STRING(--with-fpu, Use FPU), with_fpu=yes)
-AC_ARG_WITH(headers)
 
 # Checks for programs.
 AC_PROG_CC
