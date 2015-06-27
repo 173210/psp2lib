@@ -15,7 +15,7 @@ before_install:
 script:
  - export REV=dirty-$(git describe --always)
 
- - ./autogen.sh -q --with-include=/usr/arm-none-eabi/include --prefix=$PWD/dist
+ - ./autogen.sh -q --prefix=$PWD/dist
  - ./compile.sh
  - ./install.sh $PWD/dist
  - (cd dist; zip -0rq ../psp2lib-$REV.zip *)
