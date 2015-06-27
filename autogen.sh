@@ -28,7 +28,7 @@ echo Running gcc/configure
 echo Done running gcc/configure
 
 echo Running src/autogen.sh
-(cd lib; ../../src/autogen.sh "$@")
+(cd lib; ../../src/autogen.sh "$@" || cat config.log)
 echo Done running src/autogen.sh
 
 echo Running src/autogen.sh enabling FPU
