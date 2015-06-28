@@ -10,30 +10,41 @@ sudo: required
 before_install:
  - set -e
 
- - sudo add-apt-repository -y ppa:terry.guo/gcc-arm-embedded
  - sudo apt-get update -qq -y
- - sudo apt-get install -qq -y gcc-arm-none-eabi libgmp-dev libmpfr-dev libmpc-dev
+ - sudo apt-get install -qq -y libgmp-dev libmpfr-dev libmpc-dev
 
  - git clone https://github.com/173210/psp2sdk.git -q --single-branch
+ - export PSP2SDK_SRC=$PWD/psp2sdk/src
 
- - cd psp2sdk/src
+ - mkdir -p out/gcc
+ - cd out/gcc
+ - $TOP/gcc/configure -q --disable-libstdcxx-verbose --with-headers=$PSP2SDK_SRC/include --with-newlib --with-cpu=cortex-a9 --with-float=hard --with-fpu=neon-fp16 --target=arm-none-eabi
+ - sudo make install
+
+ - mkdir -p $TOP/out/lib/fpu
+
+ - cd $PSP2SDK_SRC
  - ./autogen.sh -q
  - sudo make install
- - sudo cp ./start/psp2.specs /usr/lib/gcc/arm-none-eabi/4.9.3
- - cd ../..
+ - sudo cp ./start/psp2.specs /usr/lib/gcc/arm-none-eabi/5.1.0
 
 script:
- - export REV=dirty-$(git describe --always)
+ - cd $TOP/out/lib
+ - $TOP/src/autogen.sh -q --prefix=$PREFIX
+ - (cd fpu; $TOP/src/autogen.sh -q --with-fpu --prefix=$PREFIX)
 
- - ./autogen.sh -q --prefix=$PWD/dist
+ - cd $TOP
  - ./compile.sh
- - ./install.sh $PWD/dist
- - (cd dist; zip -0rq ../psp2lib-$REV.zip *)
- - rm -Rf out dist
+ - ./install.sh $PREFIX
+ - (cd $PREFIX; zip -0rq $FILE *)
+ - rm -Rf out $PREFIX
 
 after_success:
- - curl -q -T psp2lib-$REV.zip -u $FTP ftp://wololo.net/
+ - curl -q -T $FILE -u $FTP ftp://wololo.net/
 
 env:
  global:
+  - TOP=$PWD
+  - PREFIX=$PWD/dist
+  - FILE=$PWD/psp2lib-dirty-$(git describe --always).zip
   - secure: "zsF+yvMJZ8E0sopOwDEqsJdoSvKKkgzBqQDGz6Vllbs9doyYXkRUkSHxcpZwDOb5iVDKLhuh/yDwj+sidJYICRx6iRxqz+0MxdLqeLT8JyhPaN0q8KS6kTqgjYGvjnDcIp0YNGn3m4S5Oh0soNiSlhbJg3v2O6NmgKiAtU43qig8gDNgVYJrRiul3jtOx1vzE6cYLXNqF3e0Z+t6+YnIPprpRishg2wz1F4dioJrZxXYd2rcBxXjtlT2Zpb4Pn1Mv89L5/wfeWJujEquglp3K6yQ1MUrk2a/wQUXTS9swI2Zt+WqDFz+agJVcyztHCR+5HZebuQc0iRmURLWbPiah4YgiBkMRu9fk3d8ErihFDyTBVD9zg0sfAwPKeUGfEllBZGmBFzndNOYUGUjE3bg7VNkLJ9ay4SB+traZnGWkvLr/Yn918hRwMaELTK2CzXo5h8hYtYOqycUZ698Hv99x06NDrSLBNLCpf/c1rd7y91aLRh9rji+JX1z1Va/SCQYkPIeyg//LQ0SWmEzaCFZS9rGZwA6U373QLF9D/DP/vOHNbPOEN3KMP9CDG/huM8avo0gmR1bVAEUHz0d8zq1Cf3GOVt8ks1HR2CEMoXyshGXhEnd4S6s7kK/iKBjyA3+PP/Eix8p/nZ8TUlVTkojW2uAW6Qmz43f61NoZzwztAU="
