@@ -24,7 +24,7 @@ if ! test -d lib/fpu; then
 fi
 
 echo Running gcc/configure
-(cd gcc; ../../gcc/configure --disable-libstdcxx-verbose --with-newlib --with-cpu=cortex-a9 --with-float=hard --with-fpu=neon-fp16 --target=arm-none-eabi "$@")
+(cd gcc; ../../gcc/configure --disable-libstdcxx-verbose --enable-languages=c,c++,lto --with-newlib --with-cpu=cortex-a9 --with-float=hard --with-fpu=neon-fp16 --target=arm-none-eabi "$@")
 echo Done running gcc/configure
 
 echo Running src/autogen.sh
