@@ -18,7 +18,7 @@ before_install:
 
  - mkdir -p out/gcc
  - cd out/gcc
- - sudo $TOP/gcc/configure -q --disable-libstdcxx-verbose --with-headers=$PSP2SDK_SRC/include --with-newlib --with-cpu=cortex-a9 --with-float=hard --with-fpu=neon-fp16 --target=arm-none-eabi
+ - sudo ../../gcc/configure -q --disable-libstdcxx-verbose --enable-languages=c,c++,lto --with-headers=$PSP2SDK_SRC/include --with-newlib --with-cpu=cortex-a9 --with-float=hard --with-fpu=neon-fp16 --target=arm-none-eabi
  - sudo make install
 
  - mkdir -p $TOP/out/lib/fpu
@@ -30,8 +30,8 @@ before_install:
 
 script:
  - cd $TOP/out/lib
- - $TOP/src/autogen.sh -q --prefix=$PREFIX
- - (cd fpu; $TOP/src/autogen.sh -q --with-fpu --prefix=$PREFIX)
+ - ../../src/autogen.sh -q --prefix=$PREFIX
+ - (cd fpu; ../../src/autogen.sh -q --with-fpu --prefix=$PREFIX)
 
  - cd $TOP
  - ./compile.sh
