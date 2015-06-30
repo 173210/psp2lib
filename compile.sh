@@ -5,9 +5,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-echo Compiling gcc
-make -C out/gcc all-target-libgcc all-target-libstdc++-v3 "$@"
-echo Done compiling gcc
+echo Compiling libgcc
+make -C out/gcc all-target-libgcc "$@"
+echo Done compiling libgcc
 
 echo Compiling PSP2 libraries
 make -C out/lib "$@"

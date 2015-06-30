@@ -21,10 +21,12 @@ if test "$with_fpu" = yes; then
 	psp2dir="$psp2dir/fpu"
 fi
 
+CXXFLAGS="$CXXFLAGS $CFLAGS"
 AC_SUBST(psp2dir, $psp2dir)
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_RANLIB
 if test "$RANLIB" = :; then
 	AC_MSG_ERROR(ranlib not found.)
@@ -42,5 +44,5 @@ AC_CHECK_HEADERS(psp2/kernel/loadcore.h psp2/kernel/threadmgr.h	\
 AC_CHECK_TYPES(uint32_t, , AC_MSG_ERROR(uint32_t not defined.),
 	[#include <stdint.h>])
 
-AC_CONFIG_FILES([Makefile libsysbase/Makefile start/Makefile])
+AC_CONFIG_FILES([Makefile libsupc++/Makefile libsysbase/Makefile start/Makefile])
 AC_OUTPUT

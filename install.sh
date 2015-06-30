@@ -9,33 +9,26 @@ echo "Running PSP2LIB Install..."
 echo
 
 PSP2LIB="$@/arm-none-eabi/lib/psp2"
-install -d $PSP2LIB $PSP2LIB/fpu $PSP2LIB/thumb
 
 echo
 echo "Installing run-time and support libraries... 1/3"
 echo
 
 cd out/gcc/arm-none-eabi
-install libgcc/libgcc.a "$PSP2LIB/libgcc.a"
-install libstdc++-v3/libsupc++/.libs/libsupc++.a "$PSP2LIB/libsupc++.a"
+install libgcc/libgcc.a "$PSP2LIB"
 
 echo
 echo "Installing run-time and support libraries... 2/3"
 echo
 
-cd fpu
-install libgcc/libgcc.a "$PSP2LIB/fpu/libgcc.a"
-install libstdc++-v3/libsupc++/.libs/libsupc++.a "$PSP2LIB/fpu/libsupc++.a"
-cd ..
+install fpu/libgcc/libgcc.a "$PSP2LIB/fpu"
 
 echo
 echo "Installing run-time and support libraries... 3/3"
 echo
 
-cd thumb
-install libgcc/libgcc.a "$PSP2LIB/thumb/libgcc.a"
-install libstdc++-v3/libsupc++/.libs/libsupc++.a "$PSP2LIB/thumb/libsupc++.a"
-cd ../../..
+install thumb/libgcc/libgcc.a "$PSP2LIB/thumb"
+cd ../..
 
 echo
 echo "Invoking make..."
