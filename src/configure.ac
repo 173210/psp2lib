@@ -14,15 +14,11 @@ AM_INIT_AUTOMAKE(foreign -Wno-portability)
 AC_ARG_WITH(fpu, AS_HELP_STRING(--with-fpu, Use FPU), with_fpu=yes)
 AC_ARG_WITH(headers)
 
-CFLAGS="$CFLAGS -nostdlib -specs=psp2.specs"
+CFLAGS="$CFLAGS -Wall -nostdlib -specs=psp2.specs"
 psp2dir="$prefix/arm-none-eabi/lib/psp2"
-if test "$ac_compiler_gnu" = yes; then
-	CFLAGS="$CFLAGS -Wall -mcpu=cortex-a9 -mfpu=neon-fp16"
-
-	if test "$with_fpu" = yes; then
-		CFLAGS="$CFLAGS -mfloat-abi=hard"
-		psp2dir="$psp2dir/fpu"
-	fi
+if test "$with_fpu" = yes; then
+	CFLAGS="$CFLAGS -mfloat-abi=hard"
+	psp2dir="$psp2dir/fpu"
 fi
 
 AC_SUBST(psp2dir, $psp2dir)
