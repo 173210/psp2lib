@@ -21,7 +21,7 @@ if test "$with_fpu" = yes; then
 	psp2dir="$psp2dir/fpu"
 fi
 
-CXXFLAGS="$CXXFLAGS $CFLAGS"
+CXXFLAGS="$CXXFLAGS -I$prefix/arm-none-eabi/include $CFLAGS"
 AC_SUBST(psp2dir, $psp2dir)
 
 # Checks for programs.
