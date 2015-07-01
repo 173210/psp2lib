@@ -16,18 +16,21 @@ echo
 
 cd out/gcc/arm-none-eabi
 install libgcc/libgcc.a "$PSP2LIB"
+install libgcc/crtend.o "$PSP2LIB"
 
 echo
 echo "Installing run-time and support libraries... 2/3"
 echo
 
 install fpu/libgcc/libgcc.a "$PSP2LIB/fpu"
+install fpu/libgcc/crtend.o "$PSP2LIB/fpu"
 
 echo
 echo "Installing run-time and support libraries... 3/3"
 echo
 
 install thumb/libgcc/libgcc.a "$PSP2LIB/thumb"
+install thumb/libgcc/crtend.o "$PSP2LIB/thumb"
 cd ../..
 
 echo
